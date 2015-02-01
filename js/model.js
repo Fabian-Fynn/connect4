@@ -63,19 +63,20 @@ connectFour.Model = (function() {
 		},
 
 		insertTokenAt: function (columnIndex) {
-			var falling = true;
 			var row = 0;
 			//remove after firebase added
 			var myPlayerIndex = 1;
-			while(falling) {
-				this.columns[columnIndex][row] = myPlayerIndex;
-				row++;
-				if(this.columns[columnIndex][row] != 0)
-					falling = false;
-					console.log(row);
-				this.renderBoard().delay("300");
-				this.columns[columnIndex][row-1] = 0;
+			var destination;
+
+			for (var row = 0; row <= this.columns[columnIndex].length - 1; row++) {
+				if(this.columns[columnIndex][row + 1 ] != 0 || row == this.columns[columnIndex].length - 1)
+				{
+					destination = row;
+					break;
+				}
 			}
+			this.columns[columnIndex][destination] = myPlayerIndex;
+			this.renderBoard();
 		},
 
 		isInsertTokenPossibleAt: function (columnIndex) {
