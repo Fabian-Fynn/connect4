@@ -68,19 +68,24 @@ connectFour.Model = (function() {
 			var myPlayerIndex = 1;
 			var destination;
 
-			for (var row = 0; row <= this.columns[columnIndex].length - 1; row++) {
-				if(this.columns[columnIndex][row + 1 ] != 0 || row == this.columns[columnIndex].length - 1)
-				{
-					destination = row;
-					break;
+			if(this.isInsertTokenPossibleAt(columnIndex)) {
+				for (var row = 0; row <= this.columns[columnIndex].length - 1; row++) {
+					if(this.columns[columnIndex][row + 1 ] != 0 || row == this.columns[columnIndex].length - 1)
+					{
+						destination = row;
+						break;
+					}
 				}
+				this.columns[columnIndex][destination] = myPlayerIndex;
+				this.renderBoard();
+				return true;
 			}
-			this.columns[columnIndex][destination] = myPlayerIndex;
-			this.renderBoard();
+			else
+				return false;
 		},
 
 		isInsertTokenPossibleAt: function (columnIndex) {
-			if(this.comlumns[columnIndex][0] == 0)
+			if(this.columns[columnIndex][0] == 0)
 				return true;
 			else
 				return false;
@@ -162,9 +167,6 @@ connectFour.Model = (function() {
 					this.columns[col][row] = 0;
 				}
 			}
-
-			this.columns[0][5] = 1;
-			this.columns[3][2] = 2;
 		}
 
 		//...

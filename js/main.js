@@ -29,8 +29,15 @@ connectFour.game = (function(config, Model) {
 
 		//$(model).on(Model.EVENTS.STATE_CHANGE, onGameStateChange);
 		model.renderBoard();
-		model.insertTokenAt(1);
-		model.insertTokenAt(0);
+		console.log(model.insertTokenAt(1));
+		console.log(model.insertTokenAt(0));
+		console.log(model.insertTokenAt(0));
+		console.log(model.insertTokenAt(0));
+		console.log(model.insertTokenAt(0));
+		console.log(model.insertTokenAt(0));
+		console.log(model.insertTokenAt(0));
+		console.log(model.insertTokenAt(0));
+		console.log(model.insertTokenAt(0));
 	}
 
 	function onGameListChange(e) {
