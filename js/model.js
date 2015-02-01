@@ -79,7 +79,7 @@ connectFour.Model = (function() {
 				this.columns[columnIndex][destination] = myPlayerIndex;
 				this.renderBoard();
 				if(this._isDraw())
-					this.state = OVER;
+					this.state = 'over';
 				return true;
 			}
 			else
