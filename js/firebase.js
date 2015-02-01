@@ -57,12 +57,12 @@
     //watch game added, this happens also on initalization for each game in list
     gameList.on('child_added', function(dataSnapshot) {
 
-      console.log('new game added');
+      // console.log('new game added');
 
       var game = dataSnapshot.ref();
       game.child('name').on('value', function(dataSnapshot) {
-        console.log('user!!!!!!!');
-        console.log(dataSnapshot);
+        // console.log('user!!!!!!!');
+        // console.log(dataSnapshot);
       })
       game.child('info/state').on('value', function(dataSnapshot) {
 
@@ -83,21 +83,21 @@
 
   function handleGameListChange() {
     gameList.once('value', function(dataSnapshot) {
-      console.log('game list changed:'); //todo dispatch event
-      console.log(dataSnapshot.val());
+      // console.log('game list changed:'); //todo dispatch event
+      // console.log(dataSnapshot.val());
     });
   }
 
   //start a new game and wait for second player
   function startGame() {
-    console.log('start game:');
+    // console.log('start game:');
     playerId = 1;
     firebaseGame = gameList.push();
     firebaseGame.child('player/1').set({name: 'Hansi'});
     firebaseGame.child('startedPlayerId').set({name: '1'});
     firebaseGame.child('info').set({state: 'waiting'});
 
-    console.log('game id: ' + firebaseGame.key() + ', wait for another player to enter game.');
+    // console.log('game id: ' + firebaseGame.key() + ', wait for another player to enter game.');
 
     waitForPlayer(onGameStart);
 
