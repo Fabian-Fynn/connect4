@@ -78,6 +78,8 @@ connectFour.Model = (function() {
 				}
 				this.columns[columnIndex][destination] = myPlayerIndex;
 				this.renderBoard();
+				if(this._isDraw())
+					this.state = OVER;
 				return true;
 			}
 			else
@@ -116,49 +118,48 @@ connectFour.Model = (function() {
 
 
 		renderBoard: function () {
-		var board = this.columns;
-		var cols = this.config.numColumns;
-		var rows = this.config.numRows;
+			var board = this.columns;
+			var cols = this.config.numColumns;
+			var rows = this.config.numRows;
 
-		var canvas = document.createElement('canvas');
-		var ctx = canvas.getContext("2d");
-		canvas.id = "gameBoard";
-		canvas.width = cols*100;
-		canvas.height = rows*100;
-		ctx.fillStyle = '#00c';
-		ctx.fillRect(0,0,ctx.canvas.width, ctx.canvas.height);
+			var canvas = document.createElement('canvas');
+			var ctx = canvas.getContext("2d");
+			canvas.id = "gameBoard";
+			canvas.width = cols*100;
+			canvas.height = rows*100;
+			ctx.fillStyle = '#00c';
+			ctx.fillRect(0,0,ctx.canvas.width, ctx.canvas.height);
 
-		for (var col = 0; col <= cols - 1; col++) {
-			for (var row = 0; row <= rows - 1; row++) {
-				var token = board[col][row];
-				switch(token) {
-					case 0:
-						ctx.fillStyle = '#fff';
-						break;
-					case 1:
-						ctx.fillStyle = '#c00';
-						break;
-					case 2:
-						ctx.fillStyle = '#ff0';
-						break;
-					default:
-						ctx.fillStyle = '#fff';
+			for (var col = 0; col <= cols - 1; col++) {
+				for (var row = 0; row <= rows - 1; row++) {
+					var token = board[col][row];
+					switch(token) {
+						case 0:
+							ctx.fillStyle = '#fff';
+							break;
+						case 1:
+							ctx.fillStyle = '#c00';
+							break;
+						case 2:
+							ctx.fillStyle = '#ff0';
+							break;
+						default:
+							ctx.fillStyle = '#fff';
+					}
+					ctx.beginPath();
+					ctx.arc(100*col+45,100*row+50, 35, 0, 2 * Math.PI, false);
+					ctx.fill();
+					ctx.closePath();
 				}
-				ctx.beginPath();
-				ctx.arc(100*col+45,100*row+50, 35, 0, 2 * Math.PI, false);
-				ctx.fill();
-				ctx.closePath();
-			}
-		};
-		if($('#gameBoard'))
-			$('#gameBoard').remove();
+			};
+			if($('#gameBoard'))
+				$('#gameBoard').remove();
 
-		$('#output').append(canvas);
+			$('#output').append(canvas);
 
+		},
 
-
-	},
-	//private functions
+//private functions
 		_initColumns: function () {
 			this.columns = [];
 			for (var col = 0; col <= this.config.numColumns - 1; col++) {
@@ -167,7 +168,16 @@ connectFour.Model = (function() {
 					this.columns[col][row] = 0;
 				}
 			}
+		},
+
+		_isDraw: function () {
+			for (var col = 0; col <= this.config.numColumns - 1; col++) {
+				if(this.columns[col][0] == 0)
+					return 'going';
+			}
+			return 'draw';
 		}
+
 
 		//...
 
