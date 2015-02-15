@@ -8,7 +8,7 @@ connectFour.Model = (function() {
 
 		this.config = config;
 		this.init();
-		this.myPlayerIndex = 1;
+		// this.myPlayerIndex = 1;
 	};
 
 	//static consts
@@ -194,6 +194,7 @@ connectFour.Model = (function() {
 		},
 
 		joinGame: function (gameId, playerName) {
+      var that = this;
       //try to join an existing game
       if(!gameId) {
 	      console.log('error, game id is null'); //todo handle error
@@ -206,7 +207,6 @@ connectFour.Model = (function() {
       this._firbase = new Firebase(this.config.firebaseUrl + '/games/' + gameId);
 
       var firebase = this._firbase;
-      var that = this;
 
       firebase.once('value', function(dataSnapshot) {
      	 	var game = dataSnapshot.val();
@@ -227,16 +227,17 @@ connectFour.Model = (function() {
 	            console.log('i joined the game');
 	            firebase.child('player/2').set({name: playerName});
 
-	            $('#output').append('<div class="code" >Match code: '+ this._gameId+'</div>');
+	            console.log('hier');
 
-      				for (var col = 0; col <= this.config.numColumns - 1; col++) {
+      				for (var col = 0; col <= that.config.numColumns - 1; col++) {
       					$('.btns').append('<button class="insertTokenButton" id="' + col + '">&#x25BC;</button>');
       				}
-      				$('#output').append('<div class="code" >Match code: '+ this._gameId+'</div>');
+      				// $('#output').append('<div class="code" >Match code: '+ this._gameId+'</div>');
 
-				      for (var col = 0; col <= this.config.numColumns - 1; col++) {
+				      for (var col = 0; col <= that.config.numColumns - 1; col++) {
 				      	$('.btns').append('<button class="insertTokenButton" id="' + col + '">&#x25BC;</button>');
 				      }
+				      console.log('dort');
 				      var that = this;
 				      $('.insertTokenButton').on('click', function(e) {
 					    	var id = e.target.id;
